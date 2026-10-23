@@ -1,0 +1,63 @@
+{
+  "name": "faceattend",
+  "version": "1.0.0",
+  "description": "Système de gestion de présences par reconnaissance faciale — IGGLIA 3B",
+  "author": "IGGLIA",
+  "main": "electron/main.js",
+  "scripts": {
+    "dev":          "concurrently \"npm run flask\" \"npm run vite\" \"wait-on http://127.0.0.1:5000/api/stats http://localhost:5173 && electron .\"",
+    "flask":        "cd backend && python app.py",
+    "vite":         "cd frontend && npm run dev",
+    "build":        "cd frontend && npm run build",
+    "electron:dev": "NODE_ENV=development electron .",
+    "dist":         "npm run build && electron-builder --win --x64",
+    "dist:mac":     "npm run build && electron-builder --mac",
+    "dist:linux":   "npm run build && electron-builder --linux"
+  },
+  "devDependencies": {
+    "concurrently":    "^8.2.2",
+    "wait-on":         "^7.2.0",
+    "electron":        "^31.0.0",
+    "electron-builder": "^24.13.3"
+  },
+  "build": {
+    "appId":       "com.igglia.faceattend",
+    "productName": "FaceAttend",
+    "copyright":   "© 2025 IGGLIA",
+    "icon":        "electron/assets/icon",
+    "files": [
+      "electron/**/*",
+      "frontend/dist/**/*"
+    ],
+    "extraResources": [
+      {
+        "from": "backend",
+        "to":   "backend",
+        "filter": ["**/*", "!__pycache__", "!*.pyc"]
+      }
+    ],
+    "win": {
+      "target": [{ "target": "nsis", "arch": ["x64"] }],
+      "icon": "electron/assets/icon.ico"
+    },
+    "nsis": {
+      "oneClick":           false,
+      "perMachine":         true,
+      "allowToChangeInstallationDirectory": true,
+      "installerIcon":      "electron/assets/icon.ico",
+      "uninstallerIcon":    "electron/assets/icon.ico",
+      "installerHeaderIcon":"electron/assets/icon.ico",
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName":       "FaceAttend IGGLIA 3B"
+    },
+    "mac": {
+      "category": "public.app-category.education",
+      "icon":     "electron/assets/icon.icns"
+    },
+    "linux": {
+      "target": ["AppImage", "deb"],
+      "category": "Education"
+    }
+  }
+}

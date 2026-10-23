@@ -1,0 +1,21 @@
+flask==3.0.3
+flask-cors==4.0.1
+numpy<2.0
+Pillow
+
+# ── Reconnaissance faciale : InsightFace / ArcFace (buffalo_l) ──
+# Installez avec :
+#   pip install insightface onnxruntime opencv-python-headless
+#
+# insightface installe automatiquement onnx et telecharge le modele
+# "buffalo_l" (detection + ArcFace) au premier lancement (~280 Mo,
+# stocke dans ~/.insightface/models).
+#
+# Si vous avez une carte NVIDIA et voulez utiliser le GPU (plus rapide) :
+#   pip install onnxruntime-gpu   (a la place de onnxruntime)
+# puis, dans app.py, remplacer providers=["CPUExecutionProvider"]
+# par providers=["CUDAExecutionProvider", "CPUExecutionProvider"]
+
+insightface
+onnxruntime
+opencv-python-headless
